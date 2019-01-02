@@ -26,21 +26,19 @@ export default {
     
   },
   methods: {
-    checkLogin() {
-      this.$http.post('login', this.formdata)
-      .then((res) => {
-        // console.log(res);
-        const {data:{data,meta:{msg, status}}} = res;
-        if(status === 200) {
-          // 存储token
-          localStorage.setItem('token', data.token)
-          this.$router.push({
-            name: 'Home'
-          })
-        } else {
-          this.$message.error('哎呀! 用户名错误！');
-        }
-      })
+    async checkLogin() {
+      const res = await this.$http.post('login', this.formdata)
+      // console.log(res);
+      const {data:{data,meta:{msg, status}}} = res;
+      if(status === 200) {
+        // 存储token
+        localStorage.setItem('token', data.token)
+        this.$router.push({
+          name: 'Home'
+        })
+      } else {
+        this.$message.error('哎呀! 用户名错误！');
+      }
     }
   }
 }
