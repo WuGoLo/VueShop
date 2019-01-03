@@ -5,13 +5,18 @@ import App from './App'
 import router from './router'
 import http from '@/plugins/http'
 import ElementUi from 'element-ui'
+import moment from 'moment'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/index.css'
-
+// 关于import导入各种包的问题
 Vue.use(ElementUi)
 Vue.use(http)
 // 是否显示提示
 Vue.config.productionTip = false
+
+Vue.filter('fmtData', (v) => {
+  return moment(v).format('YYYY-MM-DD')
+})
 
 /* eslint-disable no-new */
 new Vue({

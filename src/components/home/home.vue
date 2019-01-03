@@ -87,7 +87,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -96,7 +96,7 @@
 <script>
 export default {
   beforeCreate () {
-    if(!localStorage.getItem('token')) {
+    if (!localStorage.getItem('token')) {
       this.$router.push({
         name: 'login'
       })
@@ -104,14 +104,14 @@ export default {
   },
   methods: {
     // 退出功能
-    logout() {
-      localStorage.clear();
+    logout () {
+      localStorage.clear()
       this.$router.push({
         name: 'login'
       })
     }
   }
-};
+}
 </script>
 
 <style>

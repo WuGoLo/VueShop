@@ -22,22 +22,19 @@ export default {
       }
     }
   },
-  mounted () {
-    
-  },
   methods: {
-    async checkLogin() {
+    async checkLogin () {
       const res = await this.$http.post('login', this.formdata)
       // console.log(res);
-      const {data:{data,meta:{msg, status}}} = res;
-      if(status === 200) {
+      const {data: {data, meta: {status}}} = res
+      if (status === 200) {
         // 存储token
         localStorage.setItem('token', data.token)
         this.$router.push({
           name: 'Home'
         })
       } else {
-        this.$message.error('哎呀! 用户名错误！');
+        this.$message.error('哎呀! 用户名错误！')
       }
     }
   }
