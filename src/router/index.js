@@ -19,6 +19,11 @@ export default new Router({
           name: 'users',
           path: '/users',
           component: Users
+        },
+        {
+          name: 'authority',
+          path: '/authority',
+          component: Autho
         }
       ]
     }

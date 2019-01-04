@@ -42,7 +42,7 @@
         <template slot-scope="scope">
           <el-button size="mini" plain type="primary" icon="el-icon-edit" circle @click="showEditUsers(scope.row)"></el-button>
           <el-button size="mini" plain type="danger" icon="el-icon-delete" circle @click="delUsers(scope.row.id)"></el-button>
-          <el-button size="mini" plain type="success" icon="el-icon-check" circle @click="showRole()"></el-button>
+          <el-button size="mini" plain type="success" icon="el-icon-check" circle @click="showRole(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -102,18 +102,19 @@
     <el-dialog title="角色管理" :visible.sync="dialogFormVisibleRole" width="30%">
       <el-form>
         <el-form-item label="用户名称" :label-width="formLabelWidth">
-          werwer
+          {{currname}}
         </el-form-item>
         <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="role" placeholder="请选择角色">
-            <el-option label="请选择" :value="-1"></el-option>
-            <el-option label="主管" :value="beijing"></el-option>
+          <el-select v-model="currRoleId">
+            <el-option label="请选择" :value="-1" disabled></el-option>
+            <el-option v-for="(item, i) in roleData" :key="i" 
+            :label="item.roleName" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibleRole = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisibleRole = false">确 定</el-button>
+        <el-button type="primary" @click="editRole()">确 定</el-button>
       </div>
     </el-dialog>
   </el-card>
@@ -136,6 +137,11 @@ export default {
       form: {
         mg_state: 1
       },
+      currRoleId: -1,
+      currname: '',
+      currUserId: '',
+      type: 'list',
+      roleData: []
     };
   },
   mounted() {
@@ -228,8 +234,28 @@ export default {
       const res = await this.$http.put(`users/${uId}/state/${type}`)
       console.log(res);
     },
-    showRole() {
-
+    // 分配用户角色
+    async showRole(user) {
+      this.dialogFormVisibleRole = true;
+      this.currname = user.username;
+      const res = await this.$http.get(`roles`)
+      // console.log(res);
+      const {data} = res.data;
+      this.roleData = data;
+      const res1 = await this.$http.get(`users/${user.id}`)
+      // console.log(res1);
+      this.currRoleId = res1.data.data.rid;
+      this.currUserId = user.id;
+    },
+    async editRole() {
+      const res = await this.$http.put(`users/${this.currUserId}/role`, {
+        rid: this.currRoleId})
+      // console.log(res);
+      const {meta:{msg, status}} = res.data;
+      if(status === 200) {
+        this.dialogFormVisibleRole = false;
+        this.$message.success(msg);
+      }
     },
     // 获取用户
     async getUserData () {
