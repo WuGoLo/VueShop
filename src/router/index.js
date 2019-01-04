@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import login from '@/components/login/login'
 import Home from '@/components/home/home'
 import Users from '@/components/home/users'
+import Autho from '@/components/home/authority'
 
 Vue.use(Router)
 
