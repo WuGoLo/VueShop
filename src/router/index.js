@@ -4,6 +4,7 @@ import login from '@/components/login/login'
 import Home from '@/components/home/home'
 import Users from '@/components/home/users'
 import Autho from '@/components/home/authority'
+import Roles from '@/components/home/roles'
 
 Vue.use(Router)
 
@@ -23,8 +24,13 @@ export default new Router({
         },
         {
           name: 'authority',
-          path: '/authority',
+          path: '/autho',
           component: Autho
+        },
+        {
+          name: 'roles',
+          path: '/roles',
+          component: Roles
         }
       ]
     }

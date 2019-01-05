@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import http from '@/plugins/http'
+import breadCrumb from '@/plugins/breadcrumb'
 import ElementUi from 'element-ui'
 import moment from 'moment'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -13,6 +14,8 @@ Vue.use(ElementUi)
 Vue.use(http)
 // 是否显示提示
 Vue.config.productionTip = false
+
+Vue.component('my-bread', breadCrumb)
 
 Vue.filter('fmtData', (v) => {
   return moment(v).format('YYYY-MM-DD')
