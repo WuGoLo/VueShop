@@ -17,44 +17,44 @@
           <el-button type="primary" size="mini">设置动态参数</el-button>
         </el-row>
         <el-row>
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column type="expand">
-                <template slot-scope="scope">
-                  <el-form label-position="left" inline class="demo-table-expand">
-                    <el-form-item>
-                      <span v-for="(v) in scope.row.attr_vals" :key="v">
-                        <el-tag
-                          closable
-                          :disable-transitions="false"
-                          @close="handleClose(v, scope.row.attr_vals)">
-                          {{v}}
-                        </el-tag>
-                      </span>
-                      <el-input
-                        class="input-new-tag"
-                        v-if="inputVisible"
-                        v-model="inputValue"
-                        ref="saveTagInput"
-                        size="small"
-                        @keyup.enter.prevent="handleInputConfirm(scope.row)"
-                        @blur="handleInputConfirm(scope.row)"
-                      >
-                      </el-input>
-                      <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-                    </el-form-item>
-                  </el-form>
-                </template>
-              </el-table-column>
-              <el-table-column label="商品 ID" prop="attr_id">
-              </el-table-column>
-              <el-table-column label="商品名称" prop="attr_name">
-              </el-table-column>
-              <el-table-column label="操作" width="100">
-                <template slot-scope="scope">
-                  <el-button  plain size="mini" type="primary" icon="el-icon-edit" circle @click="editdata(scope.row)"></el-button>
-                  <el-button  plain size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-                </template>
-              </el-table-column>
+          <el-table :data="tableData" style="width: 100%">
+            <el-table-column type="expand">
+              <template slot-scope="scope">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item>
+                    <span v-for="(v) in scope.row.attr_vals" :key="v">
+                      <el-tag
+                        closable
+                        :disable-transitions="false"
+                        @close="handleClose(v, scope.row)">
+                        {{v}}
+                      </el-tag>
+                    </span>
+                    <el-input
+                      class="input-new-tag"
+                      v-if="inputVisible"
+                      v-model="inputValue"
+                      ref="saveTagInput"
+                      size="small"
+                      @keyup.enter.prevent="handleInputConfirm(scope.row)"
+                      @blur="handleInputConfirm(scope.row)"
+                    >
+                    </el-input>
+                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
+            <el-table-column label="商品 ID" prop="attr_id">
+            </el-table-column>
+            <el-table-column label="商品名称" prop="attr_name">
+            </el-table-column>
+            <el-table-column label="操作" width="100">
+              <template slot-scope="scope">
+                <el-button  plain size="mini" type="primary" icon="el-icon-edit" circle @click="editdata(scope.row)"></el-button>
+                <el-button  plain size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-row>
       </el-tab-pane>
@@ -143,9 +143,15 @@ export default {
     },
     
     // 动态标签事件
-    handleClose(item, arr) {
-      arr.splice(arr.indexOf(item), 1);
+    async handleClose(item, arr) {
+      arr.attr_vals.splice(arr.attr_vals.indexOf(item), 1);
       // console.log(arr);
+      const res = await this.$http.put(`categories/${this.selectedOptions[2]}/attributes/${arr.attr_id}`, {
+        attr_name: arr.attr_name,
+        attr_sel: "many",
+        attr_vals: arr.attr_vals.join(',')
+      })
+      // console.log(res);
     },
 
     showInput() {
@@ -165,7 +171,7 @@ export default {
           attr_sel: "many",
           attr_vals: arr.attr_vals.join(',')
         })
-        console.log(res);
+        // console.log(res);
       }
       this.inputVisible = false;
       this.inputValue = '';
