@@ -7,3 +7,7 @@ html,body,h2 {
 a {
   text-decoration: none;
 }
+
+.box-card {
+  height: 100%;
+}
