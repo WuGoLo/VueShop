@@ -53,8 +53,8 @@
 
       <el-table-column
         label="操作" width="100">
-        <template slot-scope="">
-          <el-button  plain size="mini" type="primary" icon="el-icon-edit" circle></el-button>
+        <template slot-scope="scope">
+          <el-button  plain size="mini" type="primary" icon="el-icon-edit" circle @click="editdata(scope.row)"></el-button>
           <el-button  plain size="mini" type="danger" icon="el-icon-delete" circle></el-button>
         </template>
       </el-table-column>
