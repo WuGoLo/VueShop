@@ -11,6 +11,9 @@ import GoodsList from '@/components/views/goods/goodslist'
 import Params from '@/components/views/goods/goodsparams'
 import categories from '@/components/views/goods/categories'
 import Goodsadd from '@/components/views/goods/goodsadd'
+
+import Order from '@/components/views/order/order'
+import Reports from '@/components/views/reports/reports'
 import {Message} from 'element-ui'
 
 Vue.use(Router)
@@ -58,6 +61,16 @@ const router = new Router({
           name: 'goodsadd',
           path: '/goodsadd',
           component: Goodsadd
+        },
+        {
+          name: 'orders',
+          path: '/orders',
+          component: Order
+        },
+        {
+          name: 'reports',
+          path: '/reports',
+          component: Reports
         },
       ]
     }
